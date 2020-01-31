@@ -10,6 +10,7 @@ namespace Aknakereso
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("csá Gitt");
             Console.ReadKey();
         }
     }
