@@ -14,7 +14,7 @@ namespace Aknakereso
         {
             char[,] pálya = new char [10, 10];
             Feltöltés(pálya);
-            
+            Kirajzoló(pálya);
             Console.ReadKey();
         }
         static void Feltöltés(char[,] pálya)
@@ -40,6 +40,20 @@ namespace Aknakereso
                 pálya[sor, oszlop] = 'B';
               
             }
+        }
+        private static void Kirajzoló(char[,] pálya)
+        {
+            
+            for (int sor = 0; sor < pálya.GetLength(0); sor++)
+            {
+                for (int oszlop = 0; oszlop < pálya.GetLength(1); oszlop++)
+                {
+                    
+                    Console.Write($"{pálya[sor, oszlop]}|");
+                }
+                Console.WriteLine();
+            }
+            
         }
 
     }
