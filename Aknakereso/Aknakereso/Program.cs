@@ -12,13 +12,34 @@ namespace Aknakereso
 
         static void Main(string[] args)
         {
-            Feltöltés();
+            char[,] pálya = new char [10, 10];
+            Feltöltés(pálya);
             
             Console.ReadKey();
         }
-        static void Feltöltés()
+        static void Feltöltés(char[,] pálya)
         {
-
+            int sor;
+            int oszlop;
+            for (sor = 0; sor < pálya.GetLength(0); sor++)
+            {
+                for (oszlop = 0; oszlop < pálya.GetLength(1); oszlop++)
+                {
+                    pálya[sor, oszlop] = '_';
+                }
+            }
+            Random gép = new Random();
+            
+            for (int i = 0; i < 10; i++)
+            {
+                do
+                {
+                    sor = gép.Next(0, 10);
+                    oszlop = gép.Next(0, 10);
+                } while (pálya[sor,oszlop] != '_');
+                pálya[sor, oszlop] = 'B';
+              
+            }
         }
 
     }
