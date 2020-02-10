@@ -35,10 +35,10 @@ namespace Aknakereso
             int indexY;
             do
 	        {
-                Lépés(pálya, out indexX, out indexY);    // Bekér 1 sor és egy 1 oszlop indexet és kirak egy 'X'-et ha nincs ott bomba, van akkor irja ki hogy felrobbantál
+                Lépés(pálya, out indexX, out indexY, bombaszám);   // Bekér 1 sor és egy 1 oszlop indexet és kirak egy 'X'-et ha nincs ott bomba, van akkor irja ki hogy felrobbantál
+                
 	        } while (pálya[indexX,indexY]!='B');
-            BombaSzámláló(pálya, indexX, indexY);
-                             
+                           
             Console.ReadKey();
         }
 
@@ -46,9 +46,15 @@ namespace Aknakereso
         {
             int BombaSzám = 0;
 
-            for (int i = -1; i < 1; i++)
+            for (int i = -1; i < 2; i++)
             {
-                Console.WriteLine("1");
+                for (int j = -1; j < 2; j++)
+			    {
+                    if (pálya[indexX+j,indexY+i] == 'B')
+	                {
+                        BombaSzám++;
+	                }
+			    }
             }
 
 
@@ -96,7 +102,7 @@ namespace Aknakereso
                 Console.WriteLine();
 			}
         }
-        static void Lépés (char[,] pálya, out int indexX, out int indexY)
+        static void Lépés (char[,] pálya, out int indexX, out int indexY, int bombaszám)
         {            
             Console.Write("x = ");
             indexX = int.Parse(Console.ReadLine())-1;
@@ -105,14 +111,16 @@ namespace Aknakereso
             Console.Clear();
             if (pálya[indexX,indexY] == 'B')
 	        {
-                Console.WriteLine("you ded");
+                Console.WriteLine($"Bombák száma: {bombaszám}");
                 Kirajzoló(pálya, true);
+                Console.WriteLine("Felrobbantál!");
             }
             else
 	        {
-                
+                Console.WriteLine($"Bombák száma: {bombaszám}");
                 pálya[indexX,indexY] = 'X';
                 Kirajzoló(pálya, false);
+                Console.WriteLine($"Bombák száma: {BombaSzámláló(pálya, indexX, indexY)}");
             }
             
         }
