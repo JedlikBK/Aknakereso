@@ -37,9 +37,24 @@ namespace Aknakereso
 	        {
                 Lépés(pálya, out indexX, out indexY);    // Bekér 1 sor és egy 1 oszlop indexet és kirak egy 'X'-et ha nincs ott bomba, van akkor irja ki hogy felrobbantál
 	        } while (pálya[indexX,indexY]!='B');
+            BombaSzámláló(pálya, indexX, indexY);
                              
             Console.ReadKey();
         }
+
+        static int BombaSzámláló(char[,] pálya, int indexX, int indexY)
+        {
+            int BombaSzám = 0;
+
+            for (int i = -1; i < 1; i++)
+            {
+                Console.WriteLine("1");
+            }
+
+
+            return BombaSzám;
+        }
+
         static void Bombasorsoló (char[,] pálya, int bombaszám)
         {
             Random gép= new Random();
@@ -68,7 +83,12 @@ namespace Aknakereso
                     else if (pálya[i,j]!='X')
 	                {
                         Console.Write('_');
-	                }
+                    }
+                    else
+                    {
+                        Console.Write('X');
+                    }
+
                     Console.Write('|');
 			    }
 	
@@ -82,14 +102,19 @@ namespace Aknakereso
             indexX = int.Parse(Console.ReadLine())-1;
             Console.Write("y = ");
             indexY = int.Parse(Console.ReadLine())-1;
+            Console.Clear();
             if (pálya[indexX,indexY] == 'B')
 	        {
                 Console.WriteLine("you ded");
-	        }else
+                Kirajzoló(pálya, true);
+            }
+            else
 	        {
+                
                 pálya[indexX,indexY] = 'X';
                 Kirajzoló(pálya, false);
-	        }
+            }
+            
         }
         
         
