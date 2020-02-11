@@ -8,23 +8,9 @@ namespace Aknakereso
 {
     class Program
     {
-        
-
-        static void Feltöltés(char[,] pálya)
-        {  
-            for (int i = 0; i < pálya.GetLength(0); i++)
-			{
-                for (int j = 0; j < pálya.GetLength(1); j++)
-			    {
-                    pálya[i,j] = '_';
-			    }
-			}
-        }
-
         static void Main(string[] args)  // Függvény: megadja, hogy az adott hely körül mennyi bomba van!!!!
         {
-            char[,] pálya=new char[10,10];
-            
+            char[,] pálya=new char[12,12];
             Console.Write("Bombák száma: ");
             int bombaszám = int.Parse(Console.ReadLine());
             Feltöltés(pálya);
@@ -36,33 +22,48 @@ namespace Aknakereso
             do
 	        {
                 Lépés(pálya, out indexX, out indexY, bombaszám);   // Bekér 1 sor és egy 1 oszlop indexet és kirak egy 'X'-et ha nincs ott bomba, van akkor irja ki hogy felrobbantál
+                Ellenörző(pálya);
                 
 	        } while (pálya[indexX,indexY]!='B');
                            
             Console.ReadKey();
+        }
+        static int Ellenörző(char[,] pálya)
+        {
+            int db = 0;
+            for (int i = 1; i < pálya.GetLength(0)-1; i++)
+			{
+                for (int j = 1; j < pálya.GetLength(1)-1; j++)
+			    {
+                    if (pálya[i,j] == '_')
+	                {
+                        db++;
+	                }
+			    }
+			}
+            return db;
         }
 
         static int BombaSzámláló(char[,] pálya, int indexX, int indexY)
         {
             int BombaSzám = 0;
 
-            for (int i = -1; i < 2; i++)
+            for (int i = indexX-1; i <= indexX+1; i++)
             {
-                for (int j = -1; j < 2; j++)
+                for (int j = indexY-1; j <= indexY+1; j++)
 			    {
-                    if (pálya[indexX+j,indexY+i] == 'B')
+                    if (pálya[i,j] == 'B')
 	                {
                         BombaSzám++;
 	                }
 			    }
             }
-
-
             return BombaSzám;
         }
 
         static void Bombasorsoló (char[,] pálya, int bombaszám)
         {
+            
             Random gép= new Random();
             int sor;
             int oszlop;
@@ -70,61 +71,73 @@ namespace Aknakereso
 			{
                 do
 	            {
-                    sor = gép.Next(10);
-                    oszlop = gép.Next(10);
+                    sor = gép.Next(1,11);
+                    oszlop = gép.Next(1,11);
 	            } while (pálya[sor,oszlop] == 'B');
                 pálya[sor,oszlop] = 'B';
 			}
         }
         static void Kirajzoló (char[,] pálya, bool legyenbomba)
         {
-            for (int i = 0; i < pálya.GetLength(0); i++)
+            for (int i = 1; i < pálya.GetLength(0)-1; i++)
 			{
-                for (int j = 0; j < pálya.GetLength(1); j++)
+                for (int j = 1; j < pálya.GetLength(1)-1; j++)
 			    {
-                    if (legyenbomba)
-	                {
-                        Console.Write(pálya[i,j]);
-	                }
-                    else if (pálya[i,j]!='X')
-	                {
-                        Console.Write('_');
+                    if (!legyenbomba)
+                    {
+                        if (pálya[i,j]=='B')
+                        {
+                            Console.Write('_');
+                        }
+                        else
+                        {
+                            Console.Write(pálya[i, j]);
+                        }
                     }
                     else
                     {
-                        Console.Write('X');
+                        Console.Write(pálya[i,j]);
                     }
 
                     Console.Write('|');
-			    }
-	
-                
+			    }              
                 Console.WriteLine();
 			}
         }
         static void Lépés (char[,] pálya, out int indexX, out int indexY, int bombaszám)
         {            
             Console.Write("x = ");
-            indexX = int.Parse(Console.ReadLine())-1;
+            indexX = int.Parse(Console.ReadLine());
             Console.Write("y = ");
-            indexY = int.Parse(Console.ReadLine())-1;
+            indexY = int.Parse(Console.ReadLine());
             Console.Clear();
             if (pálya[indexX,indexY] == 'B')
 	        {
                 Console.WriteLine($"Bombák száma: {bombaszám}");
+                pálya[indexX,indexY] = char.Parse(BombaSzámláló(pálya, indexX, indexY).ToString());
                 Kirajzoló(pálya, true);
                 Console.WriteLine("Felrobbantál!");
             }
             else
 	        {
                 Console.WriteLine($"Bombák száma: {bombaszám}");
-                pálya[indexX,indexY] = 'X';
+                pálya[indexX,indexY] = char.Parse(BombaSzámláló(pálya, indexX, indexY).ToString());
                 Kirajzoló(pálya, false);
-                Console.WriteLine($"Bombák száma: {BombaSzámláló(pálya, indexX, indexY)}");
             }
+                
+            
             
         }
-        
-        
+        static void Feltöltés(char[,] pálya)
+        {  
+            for (int i = 0; i < pálya.GetLength(0); i++)
+			{
+                for (int j = 0; j < pálya.GetLength(1); j++)
+			    {
+                    pálya[i,j] = '_';
+			    }
+			}
+        }
+       
     }
 }
