@@ -24,7 +24,16 @@ namespace Aknakereso
                 Lépés(pálya, out indexX, out indexY, bombaszám);   // Bekér 1 sor és egy 1 oszlop indexet és kirak egy 'X'-et ha nincs ott bomba, van akkor irja ki hogy felrobbantál
                 Ellenörző(pálya);
                 
-	        } while (pálya[indexX,indexY]!='B');
+	        } while (pálya[indexX,indexY]!='B' && Ellenörző(pálya) > 44);
+
+            if (Ellenörző(pálya) == 44)
+            {
+                Console.WriteLine("Győztél");
+            }
+            else
+            {
+                Console.WriteLine("Flrobbantál");
+            }
                            
             Console.ReadKey();
         }
