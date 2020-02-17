@@ -26,14 +26,11 @@ namespace Aknakereso
                 
 	        } while (pálya[indexX,indexY]!='B' && Ellenörző(pálya) > 44);
 
-            if (Ellenörző(pálya) == 44)
+            if (Ellenörző(pálya) < 22)
             {
-                Console.WriteLine("Győztél");
+                Console.WriteLine("Győztél!");
             }
-            else
-            {
-                Console.WriteLine("Flrobbantál");
-            }
+            
                            
             Console.ReadKey();
         }
@@ -115,6 +112,7 @@ namespace Aknakereso
         }
         static void Lépés (char[,] pálya, out int indexX, out int indexY, int bombaszám)
         {            
+            
             Console.Write("x = ");
             indexX = int.Parse(Console.ReadLine());
             Console.Write("y = ");
